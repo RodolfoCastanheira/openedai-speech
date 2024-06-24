@@ -2,7 +2,7 @@ services:
   server:
     build:
       dockerfile: Dockerfile.min # piper for all models, no gpu/nvidia required, ~1GB
-    image: ghcr.io/matatonic/openedai-speech-min
+    #image: ghcr.io/matatonic/openedai-speech-min
     env_file: speech.env
     ports:
       - "8000:8000"

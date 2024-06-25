@@ -1,4 +1,4 @@
-voices/
+#voices/
 #.env
 #speech.env
 #config/pre_process_map.yaml

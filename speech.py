@@ -111,7 +111,7 @@ class GenerateSpeechRequest(BaseModel):
     input: str
     voice: str = "alloy"  # alloy, echo, fable, onyx, nova, and shimmer
     response_format: str = "mp3" # mp3, opus, aac, flac
-    speed: float = 1.0 # 0.25 - 4.0
+    speed: float = 1 # 0.25 - 4.0
 
 def build_ffmpeg_args(response_format, input_format, sample_rate):
     # Convert the output to the desired format using ffmpeg
@@ -162,6 +162,7 @@ async def generate_speech(request: GenerateSpeechRequest):
 
     # Use piper for tts-1, and if xtts_device == none use for all models.
     if model == 'tts-1' or args.xtts_device == 'none':
+        #speed += 0.2 # rodox
         piper_model, speaker, not_used_language = map_voice_to_speaker(voice, 'tts-1')
         tts_args = ["piper", "--model", str(piper_model), "--data-dir", "voices", "--download-dir", "voices", "--output-raw"]
         if speaker:
@@ -202,6 +203,8 @@ async def generate_speech(request: GenerateSpeechRequest):
                 xtts = xtts_wrapper(tts_model, device=args.xtts_device)
 
             ffmpeg_args = build_ffmpeg_args(response_format, input_format="WAV", sample_rate="24000")
+
+            speed += 0.3 # rodox
 
             # tts speed doesn't seem to work well
             if speed < 0.5:

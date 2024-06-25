@@ -1,13 +1,13 @@
 ﻿tts-1:
-  echo:
+  pt_br:
     model: voices/pt_BR-faber-medium.onnx
     speaker: 
   alloy:
     model: voices/en_US-libritts_r-medium.onnx
     speaker: 79 # 64, 79, 80, 101, 130
-#  echo:
-#    model: voices/en_US-libritts_r-medium.onnx
-#    speaker: 134 # 52, 102, 134
+  echo:
+    model: voices/en_US-libritts_r-medium.onnx
+    speaker: 134 # 52, 102, 134
   echo-alt:
     model: voices/en_US-ryan-high.onnx
     speaker: # default speaker

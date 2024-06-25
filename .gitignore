@@ -3,6 +3,7 @@
 #speech.env
 #config/pre_process_map.yaml
 #config/voice_to_speaker.yaml
+*.swp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -24,9 +24,11 @@
     model: voices/en_US-libritts_r-medium.onnx
     speaker: 163
 tts-1-hd:
-  alloy-alt:
+  pt_br:
     model: xtts
-    speaker: voices/alloy-alt.wav
+    speaker: voices/fable.wav
+    #speaker: voices/alloy-alt.wav
+    language: pt
   alloy:
     model: xtts
     speaker: voices/alloy.wav

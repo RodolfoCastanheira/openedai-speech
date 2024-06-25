@@ -204,7 +204,7 @@ async def generate_speech(request: GenerateSpeechRequest):
 
             ffmpeg_args = build_ffmpeg_args(response_format, input_format="WAV", sample_rate="24000")
 
-            speed += 0.3 # rodox
+            speed += 0.15 # rodox
 
             # tts speed doesn't seem to work well
             if speed < 0.5:

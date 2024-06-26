@@ -10,6 +10,7 @@ from fastapi.responses import StreamingResponse
 import uvicorn
 from pydantic import BaseModel
 from loguru import logger
+from langdetect import detect # rodox
 
 # for parler
 try:
@@ -35,8 +36,22 @@ class xtts_wrapper():
         self.xtts = TTS(model_name=model_name, progress_bar=False).to(device)
 
     def tts(self, text, speaker_wav, speed, language):
-        tf, file_path = tempfile.mkstemp(suffix='.wav')
+        if language == 'auto': # rodox
+            try:
+                language = detect(text)
+                if language not in [
+                    'en', 'es', 'fr', 'de', 'it', 'pt', 'pl', 'tr', 
+                    'ru', 'nl', 'cs', 'ar', 'zh-cn', 'hu', 'ko', 'ja', 'hi'
+                ]:
+                    logger.info(f"Detected language {language} not supported, defaulting to en")
+                    language = 'en'
+                else:
+                    logger.info(f"Detected language: {language}")
+            except:
+                language = 'en'
+                logger.info(f"Failed to detect language, defaulting to en")
 
+        tf, file_path = tempfile.mkstemp(suffix='.wav')
         file_path = self.xtts.tts_to_file(
             text=text,
             language=language,
@@ -99,7 +114,7 @@ def map_voice_to_speaker(voice: str, model: str):
         try:
             m = voice_map[model][voice]['model']
             s = voice_map[model][voice]['speaker']
-            l = voice_map[model][voice].get('language', 'en')
+            l = voice_map[model][voice].get('language', 'auto') # rodox
 
         except KeyError as e:
             raise BadRequestError(f"Error loading voice: {voice}, KeyError: {e}", param='voice')

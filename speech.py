@@ -39,6 +39,7 @@ class xtts_wrapper():
         if language == 'auto': # rodox
             try:
                 language = detect(text)
+                if language == 'es': language = 'pt'
                 if language not in [
                     'en', 'es', 'fr', 'de', 'it', 'pt', 'pl', 'tr', 
                     'ru', 'nl', 'cs', 'ar', 'zh-cn', 'hu', 'ko', 'ja', 'hi'

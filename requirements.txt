@@ -2,14 +2,15 @@ langdetect
 fastapi
 uvicorn
 loguru
-# piper-tts
-piper-tts==1.2.0
-# xtts
-TTS
-# Fixes: https://github.com/matatonic/openedai-speech/issues/9
-# Re:  https://github.com/pytorch/pytorch/issues/121834
-torch==2.2.2
-# XXX, 3.8+ has some issue for now
-spacy==3.7.4
-# parler-tts
-git+https://github.com/huggingface/parler-tts.git
+piper-tts
+coqui-tts[languages]
+# Creating an environment where deepspeed works is complex, for now it will be disabled by default.
+#deepspeed
+
+torch; sys_platform != "darwin"
+torchaudio; sys_platform != "darwin"
+# for MPS accelerated torch on Mac - doesn't work yet, incomplete support in torch and torchaudio
+torch; --index-url https://download.pytorch.org/whl/cpu; sys_platform == "darwin"
+torchaudio; --index-url https://download.pytorch.org/whl/cpu; sys_platform == "darwin"
+
+# ROCM (Linux only) - use requirements.amd.txt

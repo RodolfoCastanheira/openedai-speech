@@ -48,9 +48,11 @@ tts-1-hd:
   me:
     model: xtts_v2.0.2 # you can specify different xtts version
     speaker: voices/me.wav # this could be you
-  parler:
-    model: parler-tts/parler_tts_mini_v0.1
-    speaker: A female speaker with a slightly low-pitched voice delivers her words quite expressively, in a very confined sounding environment with clear audio quality. She speaks very fast.
-  parler2:
-    model: parler-tts/parler_tts_mini_v0.1
-    speaker: A female voice with an Indian accent enunciates every word with precision. The speaker's voice is very close-sounding, and the recording is excellent, capturing her voice with crisp clarity.
+    enable_text_splitting: True
+    length_penalty: 1.0
+    repetition_penalty: 10
+    speed: 1.0
+    temperature: 0.75
+    top_k: 50
+    top_p: 0.85
+    comment: You can add a comment here also, which will be persistent and otherwise ignored.

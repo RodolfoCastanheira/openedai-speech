@@ -23,11 +23,16 @@ Details:
   * Configurable [generation parameters](#generation-parameters)
   * Streamed output while generating
 * Occasionally, certain words or symbols may sound incorrect, you can fix them with regex via `pre_process_map.yaml`
+* Tested with python 3.9-3.11, piper does not install on python 3.12 yet
 
 
 If you find a better voice match for `tts-1` or `tts-1-hd`, please let me know so I can update the defaults.
 
 ## Recent Changes
+
+Version 0.16.0, 2024-06-29
+
+* Multi-client safe version. Audio generation is synchronized in a single process. The estimated 'realtime' factor of XTTS on a GPU is roughly 1/3, this means that multiple streams simultaneously, or `speed` over 2, may experience audio underrun (delays or pauses in playback). This makes multiple clients possible and safe, but in practice 2 or 3 simultaneous streams is the maximum without audio underrun.
 
 Version 0.15.1, 2024-06-27
 
@@ -247,9 +252,13 @@ tts-1:
     model: voices/en_US-ryan-high.onnx
     speaker: # default speaker
 ```
-  3. New models will be downloaded as needed, of you can download them in advance with `download_voices_tts-1.sh`. For example:
+  3. New models will be downloaded as needed, or you can download them in advance with `download_voices_tts-1.sh`. For example:
 ```shell
-bash download_voices_tts-1.sh en_US-ryan-high
+$ bash download_voices_tts-1.sh en_US-ryan-high
+INFO:piper.download:Downloaded voices/en_US-ryan-high.onnx.json (https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/high/en_US-ryan-high.onnx.json)
+INFO:piper.download:Downloaded voices/en_US-ryan-high.onnx (https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/high/en_US-ryan-high.onnx)
+$ ls voices/en_US-ryan-high.onnx*
+voices/en_US-ryan-high.onnx.json  voices/en_US-ryan-high.onnx
 ```
 
 ### Coqui XTTS v2

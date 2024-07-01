@@ -87,22 +87,6 @@ class xtts_wrapper():
                 self.timer.start()
 
     def tts(self, text, language, speaker_wav, **hf_generate_kwargs):
-        if language == 'auto': # rodox
-            try:
-                language = detect(text)
-                if language == 'es': language = 'pt' # only for rodox
-                if language not in [
-                    'en', 'es', 'fr', 'de', 'it', 'pt', 'pl', 'tr', 
-                    'ru', 'nl', 'cs', 'ar', 'zh-cn', 'hu', 'ko', 'ja', 'hi'
-                ]:
-                    logger.debug(f"Detected language {language} not supported, defaulting to en")
-                    language = 'en'
-                else:
-                    logger.debug(f"Detected language: {language}")
-            except:
-                language = 'en'
-                logger.debug(f"Failed to detect language, defaulting to en")
-
         with torch.no_grad():
             self.last_used = time.time()
             tokens = 0
@@ -288,6 +272,21 @@ async def generate_speech(request: GenerateSpeechRequest):
 
         #language = voice_map.pop('language', 'en')
         language = voice_map.pop('language', 'auto') # rodox
+        if language == 'auto': # rodox
+            try:
+                language = detect(input_text)
+                if language == 'es': language = 'pt' # only for rodox
+                if language not in [
+                    'en', 'es', 'fr', 'de', 'it', 'pt', 'pl', 'tr', 
+                    'ru', 'nl', 'cs', 'ar', 'zh-cn', 'hu', 'ko', 'ja', 'hi'
+                ]:
+                    logger.debug(f"Detected language {language} not supported, defaulting to en")
+                    language = 'en'
+                else:
+                    logger.debug(f"Detected language: {language}")
+            except:
+                language = 'en'
+                logger.debug(f"Failed to detect language, defaulting to en")
 
         comment = voice_map.pop('comment', None) # ignored.
 

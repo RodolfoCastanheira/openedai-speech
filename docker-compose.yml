@@ -3,16 +3,12 @@ services:
     # image: ghcr.io/matatonic/openedai-speech
     image: registry.rodox.dns.army/openedai-speech
     pull_policy: always
-    #build:
-    #  dockerfile: Dockerfile
-    env_file: speech.env
     environment:
-      - DEEPSPEED=
+      - DEEPSPEED= # --use-deepspeed
       - TIMER="--unload-timer 600"
-      - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
       - PRELOAD_MODEL=xtts
-      - EXTRA_ARGS="--log-level $LOG $TIMER $DEEPSPEED"
-
+      - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
+      - EXTRA_ARGS=
     ports:
       - "8000:8000"
     volumes:

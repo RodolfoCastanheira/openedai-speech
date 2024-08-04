@@ -6,6 +6,13 @@ services:
     #build:
     #  dockerfile: Dockerfile
     env_file: speech.env
+    environment:
+      - DEEPSPEED=
+      - TIMER="--unload-timer 600"
+      - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
+      - PRELOAD_MODEL=xtts
+      - EXTRA_ARGS="--log-level $LOG $TIMER $DEEPSPEED"
+
     ports:
       - "8000:8000"
     volumes:

@@ -7,7 +7,7 @@ services:
     environment:
       - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
       - PRELOAD_MODEL=xtts
-      - TIMER="--unload-timer 600"
+      - TIMER=--unload-timer 600
       - EXTRA_ARGS=
     ports:
       - "8000:8000"

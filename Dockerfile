@@ -15,7 +15,7 @@ RUN if [ "$DEEPSPEED" = "true" ]; then \
     rm cuda-keyring_1.1-1_all.deb && \
     apt-get update && \
     apt-get install --no-install-recommends -y libaio-dev build-essential cuda-toolkit; \
-  touch /app/deepspeed.flag \
+  touch /app/deepspeed.flag; \
 fi
 
 

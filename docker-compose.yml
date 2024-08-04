@@ -1,13 +1,13 @@
 services:
   speech:
     # image: ghcr.io/matatonic/openedai-speech
+    #image: registry.rodox.dns.army/openedai-speech:deepspeed
     image: registry.rodox.dns.army/openedai-speech
     pull_policy: always
     environment:
-      - DEEPSPEED= # --use-deepspeed
-      - TIMER="--unload-timer 600"
-      - PRELOAD_MODEL=xtts
       - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
+      - PRELOAD_MODEL=xtts
+      - TIMER="--unload-timer 600"
       - EXTRA_ARGS=
     ports:
       - "8000:8000"

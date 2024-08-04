@@ -18,7 +18,7 @@ Details:
   * You can map your own [piper voices](https://rhasspy.github.io/piper-samples/) via the `voice_to_speaker.yaml` configuration file
 * Model `tts-1-hd` via [coqui-ai/TTS](https://github.com/coqui-ai/TTS) xtts_v2 voice cloning (fast, but requires around 4GB GPU VRAM)
   * Custom cloned voices can be used for tts-1-hd, See: [Custom Voices Howto](#custom-voices-howto)
-  * 🌐 [Multilingual](#multilingual) support with XTTS voices
+  * 🌐 [Multilingual](#multilingual) support with XTTS voices, the language is automatically detected if not set
   * [Custom fine-tuned XTTS model support](#custom-fine-tuned-model-support)
   * Configurable [generation parameters](#generation-parameters)
   * Streamed output while generating
@@ -29,6 +29,19 @@ Details:
 If you find a better voice match for `tts-1` or `tts-1-hd`, please let me know so I can update the defaults.
 
 ## Recent Changes
+
+Version 0.17.2, 2024-07-01
+
+* fix -min image (re: langdetect)
+
+Version 0.17.1, 2024-07-01
+
+* fix ROCm (add langdetect to requirements-rocm.txt)
+* Fix zh-cn for xtts
+
+Version 0.17.0, 2024-07-01
+
+* Automatic language detection, thanks [@RodolfoCastanheira](https://github.com/RodolfoCastanheira)
 
 Version 0.16.0, 2024-06-29
 
@@ -58,7 +71,7 @@ Version 0.14.0, 2024-06-26
 Version 0.13.0, 2024-06-25
 
 * Added [Custom fine-tuned XTTS model support](#custom-fine-tuned-model-support)
-* Initial prebuilt arm64 image support (Apple M-series, Raspberry Pi - MPS is not supported in XTTS/torch), thanks @JakeStevenson, @hchasens
+* Initial prebuilt arm64 image support (Apple M-series, Raspberry Pi - MPS is not supported in XTTS/torch), thanks [@JakeStevenson](https://github.com/JakeStevenson), [@hchasens](https://github.com/hchasens)
 * Initial attempt at AMD GPU (ROCm 5.7) support
 * Parler-tts support removed
 * Move the *.default.yaml to the root folder
@@ -88,7 +101,7 @@ Version 0.11.0, 2024-05-29
 
 Version: 0.10.1, 2024-05-05
 
-* Remove `runtime: nvidia` from docker-compose.yml, this assumes nvidia/cuda compatible runtime is available by default. thanks @jmtatsch
+* Remove `runtime: nvidia` from docker-compose.yml, this assumes nvidia/cuda compatible runtime is available by default. thanks [@jmtatsch](https://github.com/jmtatsch)
 
 Version: 0.10.0, 2024-04-27
 
@@ -127,7 +140,7 @@ TTS_HOME=voices
 HF_HOME=voices
 #PRELOAD_MODEL=xtts
 #PRELOAD_MODEL=xtts_v2.0.2
-#EXTRA_ARGS=--log-level DEBUG
+#EXTRA_ARGS=--log-level DEBUG --unload-timer 300
 #USE_ROCM=1
 ```
 
@@ -159,7 +172,7 @@ docker compose up
 #### AMD GPU (ROCm support)
 
 ```shell
-docker compose -d docker-compose.rocm.yml up
+docker compose -f docker-compose.rocm.yml up
 ```
 
 #### ARM64 (Apple M-series, Raspberry Pi)
@@ -172,6 +185,29 @@ docker compose -d docker-compose.rocm.yml up
 
 ```shell
 docker compose -f docker-compose.min.yml up
+```
+
+## Server Options
+
+```shell
+usage: speech.py [-h] [--xtts_device XTTS_DEVICE] [--preload PRELOAD] [--unload-timer UNLOAD_TIMER] [--use-deepspeed] [--no-cache-speaker] [-P PORT] [-H HOST]
+                 [-L {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+
+OpenedAI Speech API Server
+
+options:
+  -h, --help            show this help message and exit
+  --xtts_device XTTS_DEVICE
+                        Set the device for the xtts model. The special value of 'none' will use piper for all models. (default: cuda)
+  --preload PRELOAD     Preload a model (Ex. 'xtts' or 'xtts_v2.0.2'). By default it's loaded on first use. (default: None)
+  --unload-timer UNLOAD_TIMER
+                        Idle unload timer for the XTTS model in seconds, Ex. 900 for 15 minutes (default: None)
+  --use-deepspeed       Use deepspeed with xtts (this option is unsupported) (default: False)
+  --no-cache-speaker    Don't use the speaker wav embeddings cache (default: False)
+  -P PORT, --port PORT  Server tcp port (default: 8000)
+  -H HOST, --host HOST  Host to listen on, Ex. 0.0.0.0 (default: 0.0.0.0)
+  -L {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --log-level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
+                        Set the log level (default: INFO)
 ```
 
 
@@ -252,13 +288,9 @@ tts-1:
     model: voices/en_US-ryan-high.onnx
     speaker: # default speaker
 ```
-  3. New models will be downloaded as needed, or you can download them in advance with `download_voices_tts-1.sh`. For example:
+  3. New models will be downloaded as needed, of you can download them in advance with `download_voices_tts-1.sh`. For example:
 ```shell
-$ bash download_voices_tts-1.sh en_US-ryan-high
-INFO:piper.download:Downloaded voices/en_US-ryan-high.onnx.json (https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/high/en_US-ryan-high.onnx.json)
-INFO:piper.download:Downloaded voices/en_US-ryan-high.onnx (https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/high/en_US-ryan-high.onnx)
-$ ls voices/en_US-ryan-high.onnx*
-voices/en_US-ryan-high.onnx.json  voices/en_US-ryan-high.onnx
+bash download_voices_tts-1.sh en_US-ryan-high
 ```
 
 ### Coqui XTTS v2
@@ -299,7 +331,7 @@ tts-1-hd:
 
 Multilingual cloning support was added in version 0.11.0 and is available only with the XTTS v2 model. To use multilingual voices with piper simply download a language specific voice.
 
-Coqui XTTSv2 has support for 16 languages: English (`en`), Spanish (`es`), French (`fr`), German (`de`), Italian (`it`), Portuguese (`pt`), Polish (`pl`), Turkish (`tr`), Russian (`ru`), Dutch (`nl`), Czech (`cs`), Arabic (`ar`), Chinese (`zh-cn`), Japanese (`ja`), Hungarian (`hu`) and Korean (`ko`).
+Coqui XTTSv2 has support for multiple languages: English (`en`), Spanish (`es`), French (`fr`), German (`de`), Italian (`it`), Portuguese (`pt`), Polish (`pl`), Turkish (`tr`), Russian (`ru`), Dutch (`nl`), Czech (`cs`), Arabic (`ar`), Chinese (`zh-cn`), Hungarian (`hu`), Korean (`ko`), Japanese (`ja`), and Hindi (`hi`). When not set, an attempt will be made to automatically detect the language, falling back to English (`en`).
 
 Unfortunately the OpenAI API does not support language, but you can create your own custom speaker voice and set the language for that.
 

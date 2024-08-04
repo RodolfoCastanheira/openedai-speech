@@ -1,23 +1,22 @@
 services:
   speech:
+    # image: ghcr.io/matatonic/openedai-speech
+    image: registry.rodox.dns.army/openedai-speech
     build:
       dockerfile: Dockerfile
-    # image: ghcr.io/matatonic/openedai-speech
     env_file: speech.env
     ports:
       - "8000:8000"
     volumes:
       - ./voices:/app/voices
       - ./config:/app/config
-    # To install as a service
     restart: unless-stopped
-    # Set nvidia runtime if it's not the default
     runtime: nvidia
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              #device_ids: ['0', '1'] # Select a gpu, or
               count: all
               capabilities: [gpu]
+

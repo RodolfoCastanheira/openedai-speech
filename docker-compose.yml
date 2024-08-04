@@ -2,8 +2,9 @@ services:
   speech:
     # image: ghcr.io/matatonic/openedai-speech
     image: registry.rodox.dns.army/openedai-speech
-    build:
-      dockerfile: Dockerfile
+    pull_policy: always
+    #build:
+    #  dockerfile: Dockerfile
     env_file: speech.env
     ports:
       - "8000:8000"

@@ -8,11 +8,14 @@ RUN if [ "$TARGETPLATFORM" != "linux/amd64" ]; then apt-get install --no-install
 RUN if [ "$TARGETPLATFORM" != "linux/amd64" ]; then curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y ; fi
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-## for deepspeed support - doesn't seem worth it, image +7.5GB, over the 10GB ghcr.io limit, and no noticable gain in speed or VRAM usage?
-#RUN curl -O https://developer.download.nvidia.com/compute/cuda/repos/debian11/x86_64/cuda-keyring_1.1-1_all.deb
-#RUN dpkg -i cuda-keyring_1.1-1_all.deb && rm cuda-keyring_1.1-1_all.deb
-#RUN apt-get update && apt-get install --no-install-recommends -y libaio-dev build-essential cuda-toolkit
-##
+ARG DEEPSPEED=false
+RUN if [ "$DEEPSPEED" = "true" ]; then \
+    curl -O https://developer.download.nvidia.com/compute/cuda/repos/debian11/x86_64/cuda-keyring_1.1-1_all.deb && \
+    dpkg -i cuda-keyring_1.1-1_all.deb && \
+    rm cuda-keyring_1.1-1_all.deb && \
+    apt-get update && \
+    apt-get install --no-install-recommends -y libaio-dev build-essential cuda-toolkit; \
+fi
 
 
 WORKDIR /app
@@ -37,3 +40,4 @@ ENV COQUI_TOS_AGREED=1
 ENV CUDA_HOME=/usr/local/cuda
 
 CMD bash startup.sh
+

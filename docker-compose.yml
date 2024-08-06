@@ -6,8 +6,13 @@ services:
     #pull_policy: always
     environment:
       - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
+<<<<<<< Updated upstream
       - PRELOAD_MODEL=xtts
         #- TIMER=--unload-timer 600
+=======
+      #- PRELOAD_MODEL=xtts
+      #- TIMER=--unload-timer 600
+>>>>>>> Stashed changes
       - EXTRA_ARGS=
     ports:
       - "8000:8000"

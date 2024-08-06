@@ -3,7 +3,7 @@ services:
     # image: ghcr.io/matatonic/openedai-speech
     #image: registry.rodox.dns.army/openedai-speech:deepspeed
     image: registry.rodox.dns.army/openedai-speech
-    pull_policy: always
+    #pull_policy: always
     environment:
       - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
       - PRELOAD_MODEL=xtts

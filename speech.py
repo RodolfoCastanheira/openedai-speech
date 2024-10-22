@@ -17,6 +17,7 @@ from openedai import OpenAIStub, BadRequestError, ServiceUnavailableError
 from pydantic import BaseModel
 import uvicorn
 from langdetect import detect
+import edge_tts
 
 @contextlib.asynccontextmanager
 async def lifespan(app):
@@ -106,7 +107,15 @@ class xtts_wrapper():
 
             finally:
                 logger.debug(f"Generated {tokens} tokens in {time.time() - self.last_used:.2f}s @ {tokens / (time.time() - self.last_used):.2f} T/s")
-                self.last_used = time.time()
+
+class EdgeTTS:
+    def __init__(self, voice, speed):
+        self.voice = voice
+        self.speed = speed
+
+    async def speech_to_file(self, text: str, output_file: str) -> None:
+        communicate = edge_tts.Communicate(text, self.voice, rate=self.speed)
+        await communicate.save(output_file)
 
 def default_exists(filename: str):
     if not os.path.exists(filename):
@@ -360,8 +369,39 @@ async def generate_speech(request: GenerateSpeechRequest):
             del out_writer_worker
 
         return StreamingResponse(content=ffmpeg_proc.stdout, media_type=media_type, background=cleanup)
+    # Use edge-tts for edge-tts
+    elif model == 'edge-tts':
+        language = detect(input_text)
+        voice = {
+            'en': 'en-US-GuyNeural',
+            'es': 'es-ES-AlvaroNeural',
+            'fr': 'fr-FR-DeniseNeural',
+            'de': 'de-DE-ConradNeural',
+            'it': 'it-IT-DiegoNeural',
+            'pt': 'pt-BR-AntonioNeural',
+            'pl': 'pl-PL-MarekNeural',
+            'tr': 'tr-TR-AhmetNeural',
+            'ru': 'ru-RU-DmitryNeural',
+            'nl': 'nl-NL-MaartenNeural',
+            'cs': 'cs-CZ-AntoninNeural',
+            'ar': 'ar-EG-ShakirNeural',
+            'zh-cn': 'zh-CN-YunxiNeural',
+            'ja': 'ja-JP-KeitaNeural',
+            'hu': 'hu-HU-TamasNeural',
+            'ko': 'ko-KR-InJoonNeural'
+        }.get(language, 'en-US-GuyNeural')
+
+        client = EdgeTTS(voice=voice, speed=speed)
+        output_file = tempfile.mktemp(suffix='.wav')
+        await client.speech_to_file(input_text, output_file)
+
+        ffmpeg_args = build_ffmpeg_args(response_format, input_format="wav", sample_rate="24000")
+        ffmpeg_args.extend([output_file, "-"])
+        ffmpeg_proc = subprocess.Popen(ffmpeg_args, stdout=subprocess.PIPE)
+
+        return StreamingResponse(content=ffmpeg_proc.stdout, media_type=media_type)
     else:
-        raise BadRequestError("No such model, must be tts-1 or tts-1-hd.", param='model')
+        raise BadRequestError("No such model, must be tts-1, tts-1-hd, or edge-tts.", param='model')
 
 
 # We return 'mps' but currently XTTS will not work with mps devices as the cuda support is incomplete
@@ -407,5 +447,6 @@ if __name__ == "__main__":
 
     app.register_model('tts-1')
     app.register_model('tts-1-hd')
+    app.register_model('edge-tts')
 
     uvicorn.run(app, host=args.host, port=args.port)

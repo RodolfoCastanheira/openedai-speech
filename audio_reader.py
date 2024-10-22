@@ -16,6 +16,7 @@ import shutil
 import sys
 import tempfile
 import contextlib
+import edge_tts
 
 import openai
 
@@ -74,27 +75,43 @@ class SimpleAudioPlayer:
 class OpenAI_tts:
     def __init__(self, model, voice, speed, base_dir):
         self.base_dir = base_dir
-        self.openai_client = openai.OpenAI(
-            # export OPENAI_API_KEY=sk-11111111111
-            # export OPENAI_BASE_URL=http://localhost:8000/v1
-            api_key = os.environ.get("OPENAI_API_KEY", "sk-ip"),
-            base_url = os.environ.get("OPENAI_BASE_URL", "http://localhost:8000/v1"),
-        )
-        
-        self.params = {
-            'model': model,
-            'voice': voice,
-            'speed': speed
-        }
+        self.model = model
+        if model == "edge-tts":
+            self.tts_client = EdgeTTS(voice, speed)
+        else:
+            self.tts_client = openai.OpenAI(
+                # export OPENAI_API_KEY=sk-11111111111
+                # export OPENAI_BASE_URL=http://localhost:8000/v1
+                api_key = os.environ.get("OPENAI_API_KEY", "sk-ip"),
+                base_url = os.environ.get("OPENAI_BASE_URL", "http://localhost:8000/v1"),
+            )
+            self.params = {
+                'model': model,
+                'voice': voice,
+                'speed': speed
+            }
 
     def speech_to_file(self, text: str) -> None:
-        with self.openai_client.audio.speech.with_streaming_response.create(
-                input=text, response_format='opus', **self.params
-            ) as response:
-            tf, output_filename = tempfile.mkstemp(suffix='.wav', prefix="audio_reader_", dir=self.base_dir)
-            response.stream_to_file(output_filename)
-            return output_filename
+        if self.model == "edge-tts":
+            return self.tts_client.speech_to_file(text, self.base_dir)
+        else:
+            with self.tts_client.audio.speech.with_streaming_response.create(
+                    input=text, response_format='opus', **self.params
+                ) as response:
+                tf, output_filename = tempfile.mkstemp(suffix='.wav', prefix="audio_reader_", dir=self.base_dir)
+                response.stream_to_file(output_filename)
+                return output_filename
 
+class EdgeTTS:
+    def __init__(self, voice, speed):
+        self.voice = voice
+        self.speed = speed
+
+    async def speech_to_file(self, text: str, base_dir: str) -> str:
+        communicate = edge_tts.Communicate(text, self.voice, rate=self.speed)
+        tf, output_filename = tempfile.mkstemp(suffix='.wav', prefix="audio_reader_", dir=base_dir)
+        await communicate.save(output_filename)
+        return output_filename
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

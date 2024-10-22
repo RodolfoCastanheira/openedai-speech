@@ -18,6 +18,7 @@ except ImportError:
     playsound = None
 
 import openai
+import edge_tts
 
 
 def parse_args(argv):
@@ -25,7 +26,7 @@ def parse_args(argv):
         description='Text to speech using the OpenAI API',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("-m", "--model", type=str, default="tts-1", help="The model to use")#, choices=["tts-1", "tts-1-hd"])
+    parser.add_argument("-m", "--model", type=str, default="tts-1", help="The model to use")#, choices=["tts-1", "tts-1-hd", "edge-tts"])
     parser.add_argument("-v", "--voice", type=str, default="alloy", help="The voice of the speaker")#, choices=["alloy", "echo", "fable", "onyx", "nova", "shimmer"])
     parser.add_argument("-f", "--format", type=str, default="mp3", choices=["mp3", "aac", "opus", "flac"], help="The output audio format")
     parser.add_argument("-s", "--speed", type=float, default=1.0, help="playback speed, 0.25-4.0")
@@ -42,6 +43,16 @@ def parse_args(argv):
     args = parser.parse_args(argv)
 
     return args
+
+
+class EdgeTTS:
+    def __init__(self, voice, speed):
+        self.voice = voice
+        self.speed = speed
+
+    async def speech_to_file(self, text: str, output_file: str) -> None:
+        communicate = edge_tts.Communicate(text, self.voice, rate=self.speed)
+        await communicate.save(output_file)
 
 
 if __name__ == "__main__":
@@ -67,13 +78,16 @@ if __name__ == "__main__":
             print(f"Warning! File not found: {args.input}\nFalling back to old behavior for -i")
             text = args.input
 
-    client = openai.OpenAI(
-        # This part is not needed if you set these environment variables before import openai
-        # export OPENAI_API_KEY=sk-11111111111
-        # export OPENAI_BASE_URL=http://localhost:8000/v1
-        api_key = os.environ.get("OPENAI_API_KEY", "sk-ip"),
-        base_url = os.environ.get("OPENAI_BASE_URL", "http://localhost:8000/v1"),
-    )
+    if args.model == "edge-tts":
+        client = EdgeTTS(voice=args.voice, speed=args.speed)
+    else:
+        client = openai.OpenAI(
+            # This part is not needed if you set these environment variables before import openai
+            # export OPENAI_API_KEY=sk-11111111111
+            # export OPENAI_BASE_URL=http://localhost:8000/v1
+            api_key = os.environ.get("OPENAI_API_KEY", "sk-ip"),
+            base_url = os.environ.get("OPENAI_BASE_URL", "http://localhost:8000/v1"),
+        )
 
     if args.playsound and args.output is None:
         _, args.output = tempfile.mkstemp(suffix='.wav')
@@ -83,14 +97,18 @@ if __name__ == "__main__":
 
         atexit.register(cleanup)
 
-    with client.audio.speech.with_streaming_response.create(
-        model=args.model,
-        voice=args.voice,
-        speed=args.speed,
-        response_format=args.format,
-        input=text,
-    ) as response:
-        response.stream_to_file(args.output)
+    if args.model == "edge-tts":
+        import asyncio
+        asyncio.run(client.speech_to_file(text, args.output))
+    else:
+        with client.audio.speech.with_streaming_response.create(
+            model=args.model,
+            voice=args.voice,
+            speed=args.speed,
+            response_format=args.format,
+            input=text,
+        ) as response:
+            response.stream_to_file(args.output)
 
-        if args.playsound:
-            playsound(args.output)
+    if args.playsound:
+        playsound(args.output)

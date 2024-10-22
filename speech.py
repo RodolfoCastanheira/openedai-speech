@@ -17,6 +17,7 @@ from openedai import OpenAIStub, BadRequestError, ServiceUnavailableError
 from pydantic import BaseModel
 import uvicorn
 from langdetect import detect
+import edge_tts  # Pdade
 
 @contextlib.asynccontextmanager
 async def lifespan(app):
@@ -173,6 +174,77 @@ def build_ffmpeg_args(response_format, input_format, sample_rate):
 
     return ffmpeg_args
 
+def generate_speech_edge_tts(input_text, voice, response_format, speed):  # P8fe4
+    voice_map = map_voice_to_speaker(voice, 'edge-tts')
+    try:
+        voice_name = voice_map['voice_name']
+        rate = voice_map.get('rate', '0%')
+        volume = voice_map.get('volume', '0%')
+        pitch = voice_map.get('pitch', '0%')
+    except KeyError as e:
+        raise ServiceUnavailableError(f"Configuration error: edge-tts voice '{voice}' is missing setting. KeyError: {e}")
+
+    communicate = edge_tts.Communicate(text=input_text, voice=voice_name, rate=rate, volume=volume, pitch=pitch)
+    ffmpeg_args = build_ffmpeg_args(response_format, input_format="mp3", sample_rate="24000")
+
+    ffmpeg_proc = subprocess.Popen(ffmpeg_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+
+    in_q = queue.Queue()  # speech pcm
+    ex_q = queue.Queue()  # exceptions
+
+    def exception_check(exq: queue.Queue):
+        try:
+            e = exq.get_nowait()
+        except queue.Empty:
+            return
+
+        raise e
+
+    def generator():
+        try:
+            for chunk in communicate.stream():
+                exception_check(ex_q)
+                in_q.put(chunk)
+
+        except BrokenPipeError as e:
+            logger.info("Client disconnected - 'Broken pipe'")
+
+        except Exception as e:
+            logger.error(f"Exception: {repr(e)}")
+            raise e
+
+        finally:
+            in_q.put(None)  # sentinel
+
+    def out_writer():
+        try:
+            while True:
+                chunk = in_q.get()
+                if chunk is None:  # sentinel
+                    break
+                ffmpeg_proc.stdin.write(chunk)
+
+        except Exception as e:
+            ex_q.put(e)
+            ffmpeg_proc.kill()
+            return
+
+        finally:
+            ffmpeg_proc.stdin.close()
+
+    generator_worker = threading.Thread(target=generator, daemon=True)
+    generator_worker.start()
+
+    out_writer_worker = threading.Thread(target=out_writer, daemon=True)
+    out_writer_worker.start()
+
+    def cleanup():
+        ffmpeg_proc.kill()
+        del generator_worker
+        del out_writer_worker
+
+    return StreamingResponse(content=ffmpeg_proc.stdout, media_type="audio/mpeg", background=cleanup)
+
 @app.post("/v1/audio/speech", response_class=StreamingResponse)
 async def generate_speech(request: GenerateSpeechRequest):
     global xtts, args
@@ -209,6 +281,9 @@ async def generate_speech(request: GenerateSpeechRequest):
         raise BadRequestError(f"Invalid response_format: '{response_format}'", param='response_format')
 
     ffmpeg_args = None
+
+    if model == 'edge-tts':  # Pfa41
+        return generate_speech_edge_tts(input_text, voice, response_format, speed)  # Pfa41
 
     # Use piper for tts-1, and if xtts_device == none use for all models.
     if model == 'tts-1' or args.xtts_device == 'none':
@@ -407,5 +482,6 @@ if __name__ == "__main__":
 
     app.register_model('tts-1')
     app.register_model('tts-1-hd')
+    app.register_model('edge-tts')  # Pe57c
 
     uvicorn.run(app, host=args.host, port=args.port)

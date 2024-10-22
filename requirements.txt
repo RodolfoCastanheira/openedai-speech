@@ -14,3 +14,5 @@ torch; --index-url https://download.pytorch.org/whl/cpu; sys_platform == "darwin
 torchaudio; --index-url https://download.pytorch.org/whl/cpu; sys_platform == "darwin"
 
 # ROCM (Linux only) - use requirements.amd.txt
+
+edge-tts

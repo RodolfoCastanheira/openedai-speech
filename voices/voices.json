@@ -213,6 +213,44 @@
         },
         "aliases": []
     },
+    "cy_GB-bu_tts-medium": {
+        "key": "cy_GB-bu_tts-medium",
+        "name": "bu_tts",
+        "language": {
+            "code": "cy_GB",
+            "family": "cy",
+            "region": "GB",
+            "name_native": "Cymraeg",
+            "name_english": "Welsh",
+            "country_english": "Great Britain"
+        },
+        "quality": "medium",
+        "num_speakers": 7,
+        "speaker_id_map": {
+            "benyw-de-pro": 0,
+            "benyw-gogledd-pro": 1,
+            "gwryw-gogledd-pro": 2,
+            "gwryw-gogledd-2": 3,
+            "gwryw-de-1": 4,
+            "gwryw-gogledd-1": 5,
+            "benyw-gogledd-1": 6
+        },
+        "files": {
+            "cy/cy_GB/bu_tts/medium/cy_GB-bu_tts-medium.onnx": {
+                "size_bytes": 77061326,
+                "md5_digest": "81827b7d290b9c478be3b22e07ee028e"
+            },
+            "cy/cy_GB/bu_tts/medium/cy_GB-bu_tts-medium.onnx.json": {
+                "size_bytes": 5145,
+                "md5_digest": "410fcba3c88586d4085be2efd8e57505"
+            },
+            "cy/cy_GB/bu_tts/medium/MODEL_CARD": {
+                "size_bytes": 295,
+                "md5_digest": "9d542d9dd85ce1925837a99200332bb5"
+            }
+        },
+        "aliases": []
+    },
     "cy_GB-gwryw_gogleddol-medium": {
         "key": "cy_GB-gwryw_gogleddol-medium",
         "name": "gwryw_gogleddol",
@@ -3819,6 +3857,36 @@
         },
         "aliases": []
     },
+    "en_US-reza_ibrahim-medium": {
+        "key": "en_US-reza_ibrahim-medium",
+        "name": "reza_ibrahim",
+        "language": {
+            "code": "en_US",
+            "family": "en",
+            "region": "US",
+            "name_native": "English",
+            "name_english": "English",
+            "country_english": "United States"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "en/en_US/reza_ibrahim/medium/en_US-reza_ibrahim-medium.onnx": {
+                "size_bytes": 63511038,
+                "md5_digest": "b9d4059c794df8336060fb7f36264a43"
+            },
+            "en/en_US/reza_ibrahim/medium/en_US-reza_ibrahim-medium.onnx.json": {
+                "size_bytes": 4976,
+                "md5_digest": "94aa2ac1bcb4c64f3c4c561d5d5f5676"
+            },
+            "en/en_US/reza_ibrahim/medium/MODEL_CARD": {
+                "size_bytes": 635,
+                "md5_digest": "941fdcc93ba4b03298ac2218c7e350fc"
+            }
+        },
+        "aliases": []
+    },
     "en_US-ryan-high": {
         "key": "en_US-ryan-high",
         "name": "ryan",
@@ -3914,6 +3982,66 @@
         "aliases": [
             "en-us-ryan-medium"
         ]
+    },
+    "en_US-sam-medium": {
+        "key": "en_US-sam-medium",
+        "name": "sam",
+        "language": {
+            "code": "en_US",
+            "family": "en",
+            "region": "US",
+            "name_native": "English",
+            "name_english": "English",
+            "country_english": "United States"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "en/en_US/sam/medium/en_US-sam-medium.onnx": {
+                "size_bytes": 62950044,
+                "md5_digest": "57efcb38a3d0510051f9f55c517ccb76"
+            },
+            "en/en_US/sam/medium/en_US-sam-medium.onnx.json": {
+                "size_bytes": 5040,
+                "md5_digest": "a124497d09ce818f9800d16f24e1a8d1"
+            },
+            "en/en_US/sam/medium/MODEL_CARD": {
+                "size_bytes": 354,
+                "md5_digest": "6d703b6f41e53c4a6fb6512e91780dc0"
+            }
+        },
+        "aliases": []
+    },
+    "es_AR-daniela-high": {
+        "key": "es_AR-daniela-high",
+        "name": "daniela",
+        "language": {
+            "code": "es_AR",
+            "family": "es",
+            "region": "AR",
+            "name_native": "Español",
+            "name_english": "Spanish",
+            "country_english": "Argentina"
+        },
+        "quality": "high",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "es/es_AR/daniela/high/es_AR-daniela-high.onnx": {
+                "size_bytes": 114199011,
+                "md5_digest": "e373fb657c93877dbc438badeadff4cb"
+            },
+            "es/es_AR/daniela/high/es_AR-daniela-high.onnx.json": {
+                "size_bytes": 7248,
+                "md5_digest": "b68d699a1779d98ee94c0cd9a08ba95b"
+            },
+            "es/es_AR/daniela/high/MODEL_CARD": {
+                "size_bytes": 353,
+                "md5_digest": "d940f7c6667a11ea165ff83ef7a86669"
+            }
+        },
+        "aliases": []
     },
     "es_ES-carlfm-x_low": {
         "key": "es_ES-carlfm-x_low",
@@ -4164,6 +4292,66 @@
         },
         "aliases": []
     },
+    "fa_IR-ganji-medium": {
+        "key": "fa_IR-ganji-medium",
+        "name": "ganji",
+        "language": {
+            "code": "fa_IR",
+            "family": "fa",
+            "region": "IR",
+            "name_native": "فارسی",
+            "name_english": "Farsi",
+            "country_english": "Iran"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "fa/fa_IR/ganji/medium/fa_IR-ganji-medium.onnx": {
+                "size_bytes": 63516050,
+                "md5_digest": "b50577af60b986135b37edaeaabb01b9"
+            },
+            "fa/fa_IR/ganji/medium/fa_IR-ganji-medium.onnx.json": {
+                "size_bytes": 4958,
+                "md5_digest": "717462455e6abf8a4b8ea2365faaa41c"
+            },
+            "fa/fa_IR/ganji/medium/MODEL_CARD": {
+                "size_bytes": 247,
+                "md5_digest": "30c45ec6a69cbca1f65af2f67fce870d"
+            }
+        },
+        "aliases": []
+    },
+    "fa_IR-ganji_adabi-medium": {
+        "key": "fa_IR-ganji_adabi-medium",
+        "name": "ganji_adabi",
+        "language": {
+            "code": "fa_IR",
+            "family": "fa",
+            "region": "IR",
+            "name_native": "فارسی",
+            "name_english": "Farsi",
+            "country_english": "Iran"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "fa/fa_IR/ganji_adabi/medium/fa_IR-ganji_adabi-medium.onnx": {
+                "size_bytes": 63516050,
+                "md5_digest": "596844694672ac3d007c544301874553"
+            },
+            "fa/fa_IR/ganji_adabi/medium/fa_IR-ganji_adabi-medium.onnx.json": {
+                "size_bytes": 4964,
+                "md5_digest": "4ddbb3131d8bbf33cdc4d441062db6f4"
+            },
+            "fa/fa_IR/ganji_adabi/medium/MODEL_CARD": {
+                "size_bytes": 253,
+                "md5_digest": "0cdd82f4e66bde5ac302a6cfe6e68337"
+            }
+        },
+        "aliases": []
+    },
     "fa_IR-gyro-medium": {
         "key": "fa_IR-gyro-medium",
         "name": "gyro",
@@ -4190,6 +4378,36 @@
             "fa/fa_IR/gyro/medium/MODEL_CARD": {
                 "size_bytes": 262,
                 "md5_digest": "b30a1713c6e67946e3f1ed33eac06039"
+            }
+        },
+        "aliases": []
+    },
+    "fa_IR-reza_ibrahim-medium": {
+        "key": "fa_IR-reza_ibrahim-medium",
+        "name": "reza_ibrahim",
+        "language": {
+            "code": "fa_IR",
+            "family": "fa",
+            "region": "IR",
+            "name_native": "فارسی",
+            "name_english": "Farsi",
+            "country_english": "Iran"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "fa/fa_IR/reza_ibrahim/medium/fa_IR-reza_ibrahim-medium.onnx": {
+                "size_bytes": 63511038,
+                "md5_digest": "b9d4059c794df8336060fb7f36264a43"
+            },
+            "fa/fa_IR/reza_ibrahim/medium/fa_IR-reza_ibrahim-medium.onnx.json": {
+                "size_bytes": 4967,
+                "md5_digest": "2b6d6de83d6ea01f161e992b6a1edc8e"
+            },
+            "fa/fa_IR/reza_ibrahim/medium/MODEL_CARD": {
+                "size_bytes": 635,
+                "md5_digest": "941fdcc93ba4b03298ac2218c7e350fc"
             }
         },
         "aliases": []
@@ -4599,6 +4817,66 @@
             "fr/fr_FR/upmc/medium/MODEL_CARD": {
                 "size_bytes": 316,
                 "md5_digest": "9a49df5c79d89290ac626ebe08f05830"
+            }
+        },
+        "aliases": []
+    },
+    "hi_IN-pratham-medium": {
+        "key": "hi_IN-pratham-medium",
+        "name": "pratham",
+        "language": {
+            "code": "hi_IN",
+            "family": "hi",
+            "region": "IN",
+            "name_native": "हिन्दी",
+            "name_english": "Hindi",
+            "country_english": "India"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "hi/hi_IN/pratham/medium/hi_IN-pratham-medium.onnx": {
+                "size_bytes": 63516050,
+                "md5_digest": "f1e5a629a9e533a7155910530109eb86"
+            },
+            "hi/hi_IN/pratham/medium/hi_IN-pratham-medium.onnx.json": {
+                "size_bytes": 4970,
+                "md5_digest": "ab655cdad90f1939f00d1b3aaf440e99"
+            },
+            "hi/hi_IN/pratham/medium/MODEL_CARD": {
+                "size_bytes": 304,
+                "md5_digest": "eccc77c3d857a883e85c52cb17653c1f"
+            }
+        },
+        "aliases": []
+    },
+    "hi_IN-priyamvada-medium": {
+        "key": "hi_IN-priyamvada-medium",
+        "name": "priyamvada",
+        "language": {
+            "code": "hi_IN",
+            "family": "hi",
+            "region": "IN",
+            "name_native": "हिन्दी",
+            "name_english": "Hindi",
+            "country_english": "India"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "hi/hi_IN/priyamvada/medium/hi_IN-priyamvada-medium.onnx": {
+                "size_bytes": 63516050,
+                "md5_digest": "7d5e20c2d1e72de8ed772f222e679626"
+            },
+            "hi/hi_IN/priyamvada/medium/hi_IN-priyamvada-medium.onnx.json": {
+                "size_bytes": 4973,
+                "md5_digest": "599ca4dc5d421a9c66692433f618e080"
+            },
+            "hi/hi_IN/priyamvada/medium/MODEL_CARD": {
+                "size_bytes": 307,
+                "md5_digest": "e2b745cf97087be0a97c7f10215bfa70"
             }
         },
         "aliases": []
@@ -5046,6 +5324,126 @@
         },
         "aliases": []
     },
+    "lv_LV-aivars-medium": {
+        "key": "lv_LV-aivars-medium",
+        "name": "aivars",
+        "language": {
+            "code": "lv_LV",
+            "family": "lv",
+            "region": "LV",
+            "name_native": "Latviešu",
+            "name_english": "Latvian",
+            "country_english": "Latvia"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "lv/lv_LV/aivars/medium/lv_LV-aivars-medium.onnx": {
+                "size_bytes": 63511038,
+                "md5_digest": "5b48c6f958aea5b7e9ff34f6a10882dd"
+            },
+            "lv/lv_LV/aivars/medium/lv_LV-aivars-medium.onnx.json": {
+                "size_bytes": 7242,
+                "md5_digest": "7264f291326a66e8055e3a48fdd0bf55"
+            },
+            "lv/lv_LV/aivars/medium/MODEL_CARD": {
+                "size_bytes": 257,
+                "md5_digest": "171ee8dd94c40ee2faf96837086bd2a7"
+            }
+        },
+        "aliases": []
+    },
+    "ml_IN-arjun-medium": {
+        "key": "ml_IN-arjun-medium",
+        "name": "arjun",
+        "language": {
+            "code": "ml_IN",
+            "family": "ml",
+            "region": "IN",
+            "name_native": "മലയാളം",
+            "name_english": "Malayalam",
+            "country_english": "India"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "ml/ml_IN/arjun/medium/ml_IN-arjun-medium.onnx": {
+                "size_bytes": 62950044,
+                "md5_digest": "4f20109c108aa80f46df85ab9cda5daa"
+            },
+            "ml/ml_IN/arjun/medium/ml_IN-arjun-medium.onnx.json": {
+                "size_bytes": 5044,
+                "md5_digest": "18454efcad5bb889ee4cb1cb035993f5"
+            },
+            "ml/ml_IN/arjun/medium/MODEL_CARD": {
+                "size_bytes": 308,
+                "md5_digest": "eb0037396b93f38ffbc093dba42cf8be"
+            }
+        },
+        "aliases": []
+    },
+    "ml_IN-meera-medium": {
+        "key": "ml_IN-meera-medium",
+        "name": "meera",
+        "language": {
+            "code": "ml_IN",
+            "family": "ml",
+            "region": "IN",
+            "name_native": "മലയാളം",
+            "name_english": "Malayalam",
+            "country_english": "India"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "ml/ml_IN/meera/medium/ml_IN-meera-medium.onnx": {
+                "size_bytes": 62950044,
+                "md5_digest": "3eb7b05d25c1551f7a7cec1e1c153b1f"
+            },
+            "ml/ml_IN/meera/medium/ml_IN-meera-medium.onnx.json": {
+                "size_bytes": 5045,
+                "md5_digest": "64c2eee28c62e3a072ccc2ea3d812748"
+            },
+            "ml/ml_IN/meera/medium/MODEL_CARD": {
+                "size_bytes": 308,
+                "md5_digest": "626a0c1d744d0ce6ffca95665c526939"
+            }
+        },
+        "aliases": []
+    },
+    "ne_NP-chitwan-medium": {
+        "key": "ne_NP-chitwan-medium",
+        "name": "chitwan",
+        "language": {
+            "code": "ne_NP",
+            "family": "ne",
+            "region": "NP",
+            "name_native": "नेपाली",
+            "name_english": "Nepali",
+            "country_english": "Nepal"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "ne/ne_NP/chitwan/medium/ne_NP-chitwan-medium.onnx": {
+                "size_bytes": 62950044,
+                "md5_digest": "74cdb5b32816c366af74b55ed7494e25"
+            },
+            "ne/ne_NP/chitwan/medium/ne_NP-chitwan-medium.onnx.json": {
+                "size_bytes": 5043,
+                "md5_digest": "7ddc520e24a862016f6d22cde4b70ac1"
+            },
+            "ne/ne_NP/chitwan/medium/MODEL_CARD": {
+                "size_bytes": 275,
+                "md5_digest": "dcd35df097f84ace498d7afeb5b1a29c"
+            }
+        },
+        "aliases": []
+    },
     "ne_NP-google-medium": {
         "key": "ne_NP-google-medium",
         "name": "google",
@@ -5421,6 +5819,66 @@
             "nl-mls_7432-low"
         ]
     },
+    "nl_NL-pim-medium": {
+        "key": "nl_NL-pim-medium",
+        "name": "pim",
+        "language": {
+            "code": "nl_NL",
+            "family": "nl",
+            "region": "NL",
+            "name_native": "Nederlands",
+            "name_english": "Dutch",
+            "country_english": "Netherlands"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "nl/nl_NL/pim/medium/nl_NL-pim-medium.onnx": {
+                "size_bytes": 63516050,
+                "md5_digest": "190b3e6463a931d3c583d2fa7cd0e4a0"
+            },
+            "nl/nl_NL/pim/medium/nl_NL-pim-medium.onnx.json": {
+                "size_bytes": 5037,
+                "md5_digest": "c4d22097fefa2afe275b9bb6ff4db865"
+            },
+            "nl/nl_NL/pim/medium/MODEL_CARD": {
+                "size_bytes": 276,
+                "md5_digest": "2d28b81a9acf714216f8d334581e8439"
+            }
+        },
+        "aliases": []
+    },
+    "nl_NL-ronnie-medium": {
+        "key": "nl_NL-ronnie-medium",
+        "name": "ronnie",
+        "language": {
+            "code": "nl_NL",
+            "family": "nl",
+            "region": "NL",
+            "name_native": "Nederlands",
+            "name_english": "Dutch",
+            "country_english": "Netherlands"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "nl/nl_NL/ronnie/medium/nl_NL-ronnie-medium.onnx": {
+                "size_bytes": 62950044,
+                "md5_digest": "f74c8e7779cb05f935367d661de5b380"
+            },
+            "nl/nl_NL/ronnie/medium/nl_NL-ronnie-medium.onnx.json": {
+                "size_bytes": 5040,
+                "md5_digest": "6bd4d32724d8c68926ce7b5012370e61"
+            },
+            "nl/nl_NL/ronnie/medium/MODEL_CARD": {
+                "size_bytes": 279,
+                "md5_digest": "97acf736be1e3fdd8d9ed576dceffb29"
+            }
+        },
+        "aliases": []
+    },
     "no_NO-talesyntese-medium": {
         "key": "no_NO-talesyntese-medium",
         "name": "talesyntese",
@@ -5575,6 +6033,36 @@
             "pl-mls_6892-low"
         ]
     },
+    "pt_BR-cadu-medium": {
+        "key": "pt_BR-cadu-medium",
+        "name": "cadu",
+        "language": {
+            "code": "pt_BR",
+            "family": "pt",
+            "region": "BR",
+            "name_native": "Português",
+            "name_english": "Portuguese",
+            "country_english": "Brazil"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "pt/pt_BR/cadu/medium/pt_BR-cadu-medium.onnx": {
+                "size_bytes": 62950044,
+                "md5_digest": "6f3a6e23694c9088e3696a15191af2cc"
+            },
+            "pt/pt_BR/cadu/medium/pt_BR-cadu-medium.onnx.json": {
+                "size_bytes": 5040,
+                "md5_digest": "3d35f13df6a2f7dc9b7b7924befbe7bb"
+            },
+            "pt/pt_BR/cadu/medium/MODEL_CARD": {
+                "size_bytes": 277,
+                "md5_digest": "4f69a194136ecb54aee5ae98273debc4"
+            }
+        },
+        "aliases": []
+    },
     "pt_BR-edresson-low": {
         "key": "pt_BR-edresson-low",
         "name": "edresson",
@@ -5633,6 +6121,36 @@
             "pt/pt_BR/faber/medium/MODEL_CARD": {
                 "size_bytes": 278,
                 "md5_digest": "a81a3840b1749cf34b0e31de1577ef47"
+            }
+        },
+        "aliases": []
+    },
+    "pt_BR-jeff-medium": {
+        "key": "pt_BR-jeff-medium",
+        "name": "jeff",
+        "language": {
+            "code": "pt_BR",
+            "family": "pt",
+            "region": "BR",
+            "name_native": "Português",
+            "name_english": "Portuguese",
+            "country_english": "Brazil"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "pt/pt_BR/jeff/medium/pt_BR-jeff-medium.onnx": {
+                "size_bytes": 62950044,
+                "md5_digest": "dfb93e9da48638f9efa6b63fdb0b7030"
+            },
+            "pt/pt_BR/jeff/medium/pt_BR-jeff-medium.onnx.json": {
+                "size_bytes": 5041,
+                "md5_digest": "e7d673d946db4d9e9d8644babf347ea9"
+            },
+            "pt/pt_BR/jeff/medium/MODEL_CARD": {
+                "size_bytes": 277,
+                "md5_digest": "e6ec017f5195c56575aab61900e16110"
             }
         },
         "aliases": []
@@ -5908,6 +6426,36 @@
             "sr/sr_RS/serbski_institut/medium/MODEL_CARD": {
                 "size_bytes": 343,
                 "md5_digest": "407a5b8ebef4877405de2e89eb806633"
+            }
+        },
+        "aliases": []
+    },
+    "sv_SE-lisa-medium": {
+        "key": "sv_SE-lisa-medium",
+        "name": "lisa",
+        "language": {
+            "code": "sv_SE",
+            "family": "sv",
+            "region": "SE",
+            "name_native": "Svenska",
+            "name_english": "Swedish",
+            "country_english": "Sweden"
+        },
+        "quality": "medium",
+        "num_speakers": 1,
+        "speaker_id_map": {},
+        "files": {
+            "sv/sv_SE/lisa/medium/sv_SE-lisa-medium.onnx": {
+                "size_bytes": 63511038,
+                "md5_digest": "46398d70bbb12d033e15e601a92cd711"
+            },
+            "sv/sv_SE/lisa/medium/sv_SE-lisa-medium.onnx.json": {
+                "size_bytes": 7239,
+                "md5_digest": "1a768f208277aa835e203a969df71345"
+            },
+            "sv/sv_SE/lisa/medium/MODEL_CARD": {
+                "size_bytes": 198,
+                "md5_digest": "730544963a31316127b188dd2a4f462b"
             }
         },
         "aliases": []

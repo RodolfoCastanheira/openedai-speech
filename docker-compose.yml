@@ -6,7 +6,7 @@ services:
     #pull_policy: always
     environment:
       - LOG=DEBUG # DEBUG,INFO,WARNING,ERROR,CRITICAL
-      #- PRELOAD_MODEL=xtts
+      - PRELOAD_MODEL=xtts
       #- TIMER=--unload-timer 600
       - EXTRA_ARGS=
     ports:
